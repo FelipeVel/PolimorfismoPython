@@ -9,35 +9,65 @@ import math
 class Figura:
     
     def __init__(self, p1x, p1y, p2x, p2y):
-        self.__p1x=p1x
-        self.__p2x=p2x
-        self.__p1y=p1y
-        self.__p2y=p2y
+        self.p1x=p1x
+        self.p2x=p2x
+        self.p1y=p1y
+        self.p2y=p2y
         
-    def distancia(self):
-        self._distancia = math.sqrt((self.__p1x-self.__p2x)**2+(self.__p1y-self.__p2y)**2)      
+    def distancia(self, p1x, p1y, p2x=0, p2y=0):
+        return math.sqrt((p1x-p2x)**2+(p1y-p2y)**2)
 
-class Circulo (Figura):    
+class Circulo (Figura):
+    
+    def __init__(self, p1x, p1y, p2x, p2y):
+        self.p1x=p1x
+        self.p2x=p2x
+        self.p1y=p1y
+        self.p2y=p2y    
     
     def calcArea(self):
-        self.distancia()
-        self.__area = math.pi * 2 * (self.__radio**2)
-        return self.__area
+        self.dist = self.distancia(self.p1x, self.p1y, self.p2x, self.p2y)
+        self.area = math.pi * (self.dist**2)
+        return self.area
     
     def calcPerimetro(self):
-        self.distancia()
-        self.__perimetro = 2 * math.pi * self.__radio
-        return self.__perimetro
+        self.dist = self.distancia(self.p1x, self.p1y, self.p2x, self.p2y)
+        self.perimetro = 2 * math.pi * self.dist
+        return self.perimetro
     
 class Rectangulo(Figura):
     
+    def __init__(self, p1x, p1y, p2x, p2y):
+        self.p1x=p1x
+        self.p2x=p2x
+        self.p1y=p1y
+        self.p2y=p2y
+    
+    def calcArea1 (self):
+        self.base = self.p2x-self.p1x
+        self.altura = self.p2y-self.p1y  
+        self.area=self.base*self.altura
+        return self.area
+    
     def calcArea (self):
-        self.__base = self.__p2x-self.__p1x
-        self.__altura = self.__p2y-self.__p1y  
-        self.__area=self.__base*self.__altura
-        return self.__area
+        return self.calcArea1()
+    
+    def calcPerimetro(self):
+        return (2*self.distancia(self.p1x, self.p2x))+(2*self.distancia(self.p1y, self.p2y))
     
 class Triangulo (Rectangulo):
     
+    def __init__(self, p1x, p1y, p2x, p2y):
+        self.p1x=p1x
+        self.p2x=p2x
+        self.p1y=p1y
+        self.p2y=p2y
+    
     def calcArea (self):
-        
+        return self.calcArea1()/2
+    
+    def calcPerimetro(self):
+        return self.distancia(self.p1x, self.p2x)+self.distancia(self.p1y, self.p2y)+self.distancia(self.p1x, self.p1y, self.p2x, self.p2y)
+    
+
+    
